@@ -1,30 +1,35 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <TheHeader />
   <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+  import TheHeader from './components/layout/TheHeader.vue'
+  export default {
+    components: { TheHeader },
 
-#nav {
-  padding: 30px;
+    mounted(){
+      // Load graphs available in localStorage
+      const graphs =  JSON.parse(localStorage.getItem('graphs')) || []
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+      this.$store.dispatch({
+        type: 'loadGraphs',
+        graphs
+      })
 
-    &.router-link-exact-active {
-      color: #42b983;
     }
   }
-}
+</script>
+
+<style lang="scss">
+  .btn:focus {
+    box-shadow: none !important;
+  }
+  .btn:disabled {
+    background-color: silver !important;
+    cursor: not-allowed !important;
+    color: #444 !important;
+    outline: none !important;
+    border: none !important;
+  }
 </style>
